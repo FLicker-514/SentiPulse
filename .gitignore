@@ -1,9 +1,11 @@
 .idea/
-outputs/
+outputs/*/checkpoint-*/
+outputs/*/best_model/
 __pycache__/
 *.py[cod]
 .env
 .venv/
 venv/
 models/
+models.zip
 .DS_Store

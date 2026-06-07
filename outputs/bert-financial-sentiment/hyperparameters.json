@@ -1,0 +1,17 @@
+{
+  "learning_rate": 2e-5,
+  "per_device_train_batch_size": 16,
+  "per_device_eval_batch_size": 32,
+  "num_train_epochs": 3,
+  "weight_decay": 0.01,
+  "max_length": 256,
+  "seed": 42,
+  "warmup_ratio": null,
+  "lr_scheduler_type": "linear",
+  "model": "bert-base-chinese",
+  "dataset": "FinanceMTEB/FinFE",
+  "train_samples": 13641,
+  "validation_samples": 1516,
+  "test_samples": 1000,
+  "total_steps": 2559
+}
