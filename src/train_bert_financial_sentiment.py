@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 import numpy as np
-from datasets import DatasetDict, load_dataset
+from datasets import ClassLabel, Dataset, DatasetDict, load_dataset
 from sklearn.metrics import accuracy_score, f1_score, precision_recall_fscore_support
 from transformers import (
     AutoModelForSequenceClassification,
@@ -17,8 +17,8 @@ from transformers import (
 )
 
 
-DEFAULT_DATASET = "FinanceMTEB/FinFE"
-DEFAULT_MODEL = "bert-base-chinese"
+DEFAULT_DATASET = "data"
+DEFAULT_MODEL = "models/bert-base-chinese"
 
 
 LABEL_ALIASES = {
@@ -62,19 +62,27 @@ def prepare_splits(raw_dataset: DatasetDict, validation_size: float, seed: int) 
         return raw_dataset
 
     if "test" in raw_dataset and "train" in raw_dataset:
-        train_valid = raw_dataset["train"].train_test_split(test_size=validation_size, seed=seed, stratify_by_column="label")
+        train_ds = raw_dataset["train"]
+        if train_ds.features["label"].dtype.startswith("int"):
+            label_names = sorted({str(ex["label"]) for ex in train_ds})
+            train_ds = train_ds.cast_column("label", ClassLabel(names=label_names))
+        train_valid = train_ds.train_test_split(test_size=validation_size, seed=seed, stratify_by_column="label")
         return DatasetDict(
             {
                 "train": train_valid["train"],
                 "validation": train_valid["test"],
-                "test": raw_dataset["test"],
+                "test": raw_dataset["test"].cast_column("label", ClassLabel(names=label_names)),
             }
         )
 
     if "train" not in raw_dataset:
         raise ValueError("Dataset must contain a train split.")
 
-    train_valid = raw_dataset["train"].train_test_split(test_size=validation_size, seed=seed, stratify_by_column="label")
+    train_ds = raw_dataset["train"]
+    if train_ds.features["label"].dtype.startswith("int"):
+        label_names = sorted({str(ex["label"]) for ex in train_ds})
+        train_ds = train_ds.cast_column("label", ClassLabel(names=label_names))
+    train_valid = train_ds.train_test_split(test_size=validation_size, seed=seed, stratify_by_column="label")
     return DatasetDict({"train": train_valid["train"], "validation": train_valid["test"]})
 
 
@@ -106,11 +114,27 @@ def compute_metrics(eval_pred: tuple[np.ndarray, np.ndarray]) -> dict[str, float
     }
 
 
+def load_local_parquet(data_dir: str) -> DatasetDict:
+    train_path = Path(data_dir) / "train-00000-of-00001.parquet"
+    test_path = Path(data_dir) / "test-00000-of-00001.parquet"
+    if not train_path.exists():
+        raise FileNotFoundError(f"Training parquet not found at {train_path}")
+    if not test_path.exists():
+        raise FileNotFoundError(f"Test parquet not found at {test_path}")
+    return DatasetDict({
+        "train": Dataset.from_parquet(str(train_path)),
+        "test": Dataset.from_parquet(str(test_path)),
+    })
+
+
 def main() -> None:
     args = parse_args()
     set_seed(args.seed)
 
-    raw_dataset = load_dataset(args.dataset_name)
+    if args.dataset_name == DEFAULT_DATASET and Path(args.dataset_name).is_dir():
+        raw_dataset = load_local_parquet(args.dataset_name)
+    else:
+        raw_dataset = load_dataset(args.dataset_name)
     dataset = prepare_splits(raw_dataset, args.validation_size, args.seed)
     dataset, label_names = encode_labels(dataset, args.label_column)
 
@@ -154,7 +178,7 @@ def main() -> None:
         args=training_args,
         train_dataset=tokenized_dataset["train"],
         eval_dataset=tokenized_dataset["validation"],
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
         data_collator=DataCollatorWithPadding(tokenizer=tokenizer),
         compute_metrics=compute_metrics,
     )
