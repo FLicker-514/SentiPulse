@@ -1,0 +1,27 @@
+# python
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+
+# log
+*.log
+logs/
+
+# temp
+*.db-*
+*.tmp
+
+# temp data during crawling
+
+# PDF files needed to be OCR
+data/pdf
+
+# stcn.com frontend code, used to analyze way of extracting data
+data/stcn_frontend_code
+
+# cookies for stcn.com, used to bypass anti-crawling measures
+data/stcn_browser_cookies.json 
+
+# example png
+data/*.png
