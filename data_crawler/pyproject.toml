@@ -1,0 +1,19 @@
+[project]
+name = "sentipulse"
+version = "0.1.0"
+description = "SentiPulse data collection - stock and news data crawler"
+requires-python = ">=3.10"
+dependencies = [
+    "akshare>=1.15.0",
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=5.0.0",
+    "baostock>=0.9.1",
+    "pycryptodome>=3.23.0",
+    "pdfplumber>=0.11.9",
+    "pymupdf>=1.27.2.3",
+    "pytesseract>=0.3.13",
+    "pdf2image>=1.17.0",
+    "playwright>=1.60.0",
+    "playwright-stealth>=2.0.3",
+]
