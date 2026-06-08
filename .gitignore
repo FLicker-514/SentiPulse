@@ -9,3 +9,5 @@ venv/
 models/
 models.zip
 .DS_Store
+
+data/sentipulse.db
