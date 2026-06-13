@@ -27,7 +27,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   flex: 1;
-  padding: 40px 48px 20px;
+  padding: 80px 48px 40px;
   position: relative;
   background-color: var(--bg-dark);
   background-image: url('/stock_market.png');

@@ -22,6 +22,8 @@
       <p><strong>完整数据链路：</strong>爬取→清洗→摘要→特征→建模，可复现</p>
       <p><strong>严谨消融实验：</strong>3组对照，隔离情感信号贡献</p>
       <p><strong>可解释评估：</strong>滚动回测 + 年滚动 + 多维度指标</p>
+      <p><strong>微调必要性验证：</strong>未微调 BERT 引入噪声反使 MAE 升至 11.27，证明领域微调是融合前提</p>
+      <p><strong>端到端系统工程：</strong>从爬虫到前端界面，全链路可复现</p>
     </div>
     <h2>技术栈</h2>
     <p class="tags">

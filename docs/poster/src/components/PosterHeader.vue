@@ -31,8 +31,8 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.l h1.cn { font-size: 112px; color: white; margin-top: 4px; margin-bottom: 112px; }
-.l .sub { font-size: 48px; font-weight: 300; color: #94a3b8; letter-spacing: 1px; }
+.l h1.cn { font-size: 112px; color: white; margin-top: 4px; margin-bottom: 180px; }
+.l .sub { font-size: 48px; font-weight: 300; color: #94a3b8; letter-spacing: 1px; margin-bottom: 20px; }
 .r { text-align: right; font-size: 36px; color: #94a3b8; line-height: 1.9; }
 .r .course { color: #e8c97a; font-weight: 600; font-size: 38px; }
 </style>

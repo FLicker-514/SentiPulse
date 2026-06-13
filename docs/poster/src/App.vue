@@ -6,15 +6,17 @@
       <div class="col col-1">
         <SectionBackground />
         <SectionDataPipeline />
-        <SectionHyperparams />
         <SectionNewsDist />
+        <SectionCharts />
       </div>
       <div class="col col-2">
+        <SectionRiskReturn />
         <SectionBertFinetune />
         <SectionLstm />
       </div>
       <div class="col col-3">
-        <SectionCharts />
+        <SectionLstmResult />
+        <SectionYearRoll />
         <SectionTeam />
       </div>
     </div>
@@ -30,8 +32,10 @@ import SectionDataPipeline from './components/SectionDataPipeline.vue'
 import SectionBertFinetune from './components/SectionBertFinetune.vue'
 import SectionLstm from './components/SectionLstm.vue'
 import SectionCharts from './components/SectionCharts.vue'
-import SectionHyperparams from './components/SectionHyperparams.vue'
+import SectionRiskReturn from './components/SectionRiskReturn.vue'
 import SectionNewsDist from './components/SectionNewsDist.vue'
+import SectionLstmResult from './components/SectionLstmResult.vue'
+import SectionYearRoll from './components/SectionYearRoll.vue'
 import SectionTeam from './components/SectionTeam.vue'
 import PosterFooter from './components/PosterFooter.vue'
 </script>
