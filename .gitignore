@@ -11,3 +11,6 @@ models.zip
 .DS_Store
 
 data/sentipulse.db
+
+.claude/
+.vscode/

@@ -1,0 +1,82 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg-dark: #090F31;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --gold: #c8963e;
+  --gold-light: #e8c97a;
+  --teal: #0d9488;
+  --teal-light: #5eead4;
+  --border: rgba(255,255,255,0.1);
+  --card-bg: rgba(255,255,255,0.08);
+}
+
+body {
+  font-family: 'Segoe UI','Microsoft YaHei','PingFang SC',-apple-system,sans-serif;
+  background: #090F31;
+  display: flex; justify-content: center; padding: 2rem;
+}
+.poster {
+  width: 594mm; height: 841mm;
+  background: #090F31;
+  box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  flex: 1;
+  padding: 40px 48px 20px;
+  position: relative;
+  background-color: var(--bg-dark);
+  background-image: url('/stock_market.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+/* Dark overlay to increase text readability */
+.main::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: rgba(9, 15, 49, 0.65);
+  pointer-events: none;
+}
+
+.col { padding: 0 28px; position: relative; z-index: 1; }
+.col-1 { border-right: 1px solid var(--border); }
+.col-2 { border-right: 1px solid var(--border); }
+
+.col > * { margin-bottom: 20px; }
+.col > *:last-child { margin-bottom: 0; }
+
+/* Dark theme section overrides for global elements */
+.main h2 { color: var(--gold-light); border-bottom-color: var(--gold); }
+.main h3 { color: var(--text); }
+.main p, .main li { color: var(--text); }
+.main table { color: var(--text); }
+.main .tbl th { background: rgba(0,0,0,0.4); color: var(--gold-light); }
+.main .tbl tr:nth-child(even) td { background: var(--card-bg); }
+.main .tbl td { border-bottom-color: var(--border); }
+.main .info, .main .info-box { background: var(--card-bg); border-left-color: var(--gold); color: var(--text); }
+.main .hl, .main .highlight-box { background: rgba(200,150,62,0.12); border-color: rgba(200,150,62,0.3); color: var(--gold-light); }
+.main .card { background: var(--card-bg); border-top-color: var(--teal); }
+.main .card .name { color: white; }
+.main .card .role { color: var(--teal-light); }
+.main .card .desc { color: var(--text-muted); }
+.main .note { color: var(--text-muted); }
+.main .gantt .mem { color: var(--text); }
+.main .gantt .gh span { color: var(--text-muted); }
+.main .leg span { color: var(--text-muted); }
+.main .clist p { color: var(--text); }
+.main .boost { color: var(--text); }
+.main .chart-img, .main .c { border-color: var(--border); }
+
+@media print {
+  body { background: #090F31; padding: 0; }
+  .poster { width: 594mm; height: 841mm; box-shadow: none; page-break-after: avoid; }
+  @page { size: A1 portrait; margin: 0; }
+  * { print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; }
+}
